@@ -1,0 +1,50 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  php-7.4:
+    docker:
+      - image: circleci/php:7.4-node-browsers
+    steps:
+      - checkout
+      - run:
+          name: Atualizando Composer
+          command: sudo composer self-update      
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
+      - run:
+          name: Instalando dependências
+          command: composer install -n --prefer-dist
+      - save_cache: # special step to save the dependency cache with the `composer.lock` cache key template
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: Validando padrão PSR-2
+          command: composer check-psr2
+      - run:
+          name: Validando padrão de código do projeto
+          command: composer check-cs
+      - run:
+          name: Realizando testes
+          command: composer test -- --coverage-text
+      - run:
+          name: Subindo relatório de cobertura de código
+          command: |
+            curl -s https://codecov.io/bash > .codecov
+            chmod +x .codecov
+            ./.codecov
+      - store_artifacts:
+          path: build/coverage
+          destination: coverage
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - php-7.4
