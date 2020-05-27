@@ -14,17 +14,6 @@ class UsuarioRepositoryFake implements UsuarioRepositoryInterface
         'salvar' => 0,
     ];
 
-    // public function buscar(int $id)
-    // {
-    //     foreach ($this->feeds as $feed) {
-    //         if ($feed->id() == $id) {
-    //             return $feed;
-    //         }
-    //     }
-
-    //     return null;
-    // }
-
     public function buscarPeloEmail(string $email) : ?Usuario
     {
         $this->chamadasDeMetodos['buscarPeloEmail']++;

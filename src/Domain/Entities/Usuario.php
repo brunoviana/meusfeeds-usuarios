@@ -10,12 +10,7 @@ class Usuario
 
     private string $email;
 
-    public static function novo(string $nome, string $email)
-    {
-        return new self($nome, $email);
-    }
-
-    private function __construct(string $nome, string $email)
+    public function __construct(string $nome, string $email)
     {
         $this->nome = $nome;
         $this->email = $email;

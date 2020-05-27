@@ -3,49 +3,51 @@
 namespace MeusFeeds\Usuarios\App\UseCases;
 
 use MeusFeeds\Usuarios\Domain\Entities\Usuario;
-use MeusFeeds\Usuarios\Domain\Services\UsuarioService;
+use MeusFeeds\Usuarios\Domain\Repositories\UsuarioRepositoryInterface;
+use MeusFeeds\Usuarios\Domain\Interfaces\ListaDeConvitesInterface;
+
 use MeusFeeds\Usuarios\App\Requests\AutenticarUsuarioRequest;
 use MeusFeeds\Usuarios\App\Responses\AutenticarUsuarioResponse;
-
-use MeusFeeds\Usuarios\Domain\Repositories\UsuarioRepositoryInterface;
-use MeusFeeds\Usuarios\Domain\Interfaces\ConsultorDePermissoesInterface;
+use MeusFeeds\Usuarios\App\Exceptions\UsuarioNaoAutenticadoException;
 
 class AutenticarUsuario
 {
     private $request;
 
-    private $consultorDePermissoes;
+    private $listaDeConvites;
 
     private $usuarioRepository;
 
     public function __construct(
         AutenticarUsuarioRequest $request,
         UsuarioRepositoryInterface $usuarioRepository,
-        ConsultorDePermissoesInterface $consultorDePermissoes
+        ListaDeConvitesInterface $listaDeConvites
     ) {
         $this->request = $request;
         $this->usuarioRepository = $usuarioRepository;
-        $this->consultorDePermissoes = $consultorDePermissoes;
+        $this->listaDeConvites = $listaDeConvites;
     }
 
     public function executar()
     {
-        $usuario = $this->autenticar();
+        $nome = $this->request->nome();
+        $email = $this->request->email();
+
+        $usuario = $this->usuarioRepository->buscarPeloEmail($email);
+
+        if ($usuario) {
+            return $this->responder($usuario);
+        }
+
+        if (!$this->listaDeConvites->emailExisteNaLista($email)) {
+            throw new UsuarioNaoAutenticadoException('Usuário não tem permissão para acessar');
+        }
+
+        $usuario = new Usuario($nome, $email);
+
+        $this->usuarioRepository->salvar($usuario);
 
         return $this->responder($usuario);
-    }
-
-    public function autenticar()
-    {
-        $usuarioService = new UsuarioService();
-
-        $usuarioService->setUsuarioRepository($this->usuarioRepository);
-        $usuarioService->setConsultorDePermissoes($this->consultorDePermissoes);
-
-        return $usuarioService->autenticaOuCriaUsuario(
-            $this->request->nome(),
-            $this->request->email()
-        );
     }
 
     public function responder(Usuario $usuario)

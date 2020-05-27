@@ -10,7 +10,7 @@ class UsuarioTest extends TestCase
 {
     public function test_Novo_Usuario_Deve_Comecar_Com_Id_Zero()
     {
-        $usuario = Usuario::novo(
+        $usuario = new Usuario(
             'Bruno Viana',
             'brunoviana@gmail.com'
         );
@@ -20,7 +20,7 @@ class UsuarioTest extends TestCase
 
     public function test_Novo_Usuario_Deve_Inserir_Id_Com_Sucesso()
     {
-        $usuario = Usuario::novo(
+        $usuario = new Usuario(
             'Bruno Viana',
             'brunoviana@gmail.com'
         );
@@ -34,7 +34,7 @@ class UsuarioTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
 
-        $usuario = Usuario::novo(
+        $usuario = new Usuario(
             'Bruno Viana',
             'brunoviana@gmail.com'
         );
@@ -45,7 +45,7 @@ class UsuarioTest extends TestCase
 
     public function test_Usuario_Deve_Retornar_Nome_Correto()
     {
-        $usuario = Usuario::novo(
+        $usuario = new Usuario(
             'Bruno Viana',
             'brunoviana@gmail.com'
         );
@@ -55,7 +55,7 @@ class UsuarioTest extends TestCase
 
     public function test_Usuario_Deve_Retornar_Email_Correto()
     {
-        $usuario = Usuario::novo(
+        $usuario = new Usuario(
             'Bruno Viana',
             'brunoviana@gmail.com'
         );
