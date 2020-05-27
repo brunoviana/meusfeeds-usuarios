@@ -3,12 +3,12 @@
 namespace MeusFeeds\Usuarios\App\UseCases;
 
 use MeusFeeds\Usuarios\Domain\Entities\Usuario;
-use MeusFeeds\Usuarios\Domain\Repositories\UsuarioRepositoryInterface;
-use MeusFeeds\Usuarios\Domain\Interfaces\ListaDeConvitesInterface;
-
 use MeusFeeds\Usuarios\App\Requests\AutenticarUsuarioRequest;
 use MeusFeeds\Usuarios\App\Responses\AutenticarUsuarioResponse;
+
+use MeusFeeds\Usuarios\Domain\Interfaces\ListaDeConvitesInterface;
 use MeusFeeds\Usuarios\App\Exceptions\UsuarioNaoAutenticadoException;
+use MeusFeeds\Usuarios\Domain\Repositories\UsuarioRepositoryInterface;
 
 class AutenticarUsuario
 {

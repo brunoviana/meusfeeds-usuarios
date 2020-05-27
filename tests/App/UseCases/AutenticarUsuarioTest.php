@@ -10,8 +10,8 @@ use MeusFeeds\Usuarios\App\Requests\AutenticarUsuarioRequest;
 use MeusFeeds\Usuarios\App\Responses\AutenticarUsuarioResponse;
 use MeusFeeds\Usuarios\App\Exceptions\UsuarioNaoAutenticadoException;
 
-use MeusFeeds\Usuarios\Tests\TestAdapters\Domain\UsuarioRepositoryFake;
 use MeusFeeds\Usuarios\Tests\TestAdapters\Domain\ListaDeConvitesFake;
+use MeusFeeds\Usuarios\Tests\TestAdapters\Domain\UsuarioRepositoryFake;
 
 class AutenticarUsuarioTest extends TestCase
 {
