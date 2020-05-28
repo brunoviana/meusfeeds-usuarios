@@ -28,13 +28,14 @@ class AutenticarUsuarioTest extends TestCase
     public function test_Deve_Autenticar_Usuario_Existente_Com_Sucesso()
     {
         $this->usuarioRepositoryFake->salvar(
-            new Usuario('Bruno Viana', 'brunoviana@gmail.com')
+            new Usuario('Bruno Viana', 'brunoviana@gmail.com', 'foto.jpg')
         );
 
         $autenticarUsuario = new AutenticarUsuario(
             new AutenticarUsuarioRequest(
                 'Bruno Viana',
-                'brunoviana@gmail.com'
+                'brunoviana@gmail.com',
+                'foto.jpg'
             ),
             $this->usuarioRepositoryFake,
             $this->listaDeConvitesFake
@@ -47,6 +48,7 @@ class AutenticarUsuarioTest extends TestCase
         $this->assertEquals(1, $resposta->usuario()->id());
         $this->assertEquals('Bruno Viana', $resposta->usuario()->nome());
         $this->assertEquals('brunoviana@gmail.com', $resposta->usuario()->email());
+        $this->assertEquals('foto.jpg', $resposta->usuario()->foto());
     }
 
     public function test_Deve_Autenticar_Usuario_Que_Foi_Convidado_Com_Sucesso()
@@ -56,7 +58,8 @@ class AutenticarUsuarioTest extends TestCase
         $autenticarUsuario = new AutenticarUsuario(
             new AutenticarUsuarioRequest(
                 'Bruno Viana',
-                'brunoviana@gmail.com'
+                'brunoviana@gmail.com',
+                'foto.jpg'
             ),
             $this->usuarioRepositoryFake,
             $this->listaDeConvitesFake
@@ -69,6 +72,7 @@ class AutenticarUsuarioTest extends TestCase
         $this->assertEquals(1, $resposta->usuario()->id());
         $this->assertEquals('Bruno Viana', $resposta->usuario()->nome());
         $this->assertEquals('brunoviana@gmail.com', $resposta->usuario()->email());
+        $this->assertEquals('foto.jpg', $resposta->usuario()->foto());
     }
 
     public function test_Deve_Falhar_Caso_Usuario_Nao_Existe_E_Nao_Foi_Convidado()
@@ -79,7 +83,8 @@ class AutenticarUsuarioTest extends TestCase
         $autenticarUsuario = new AutenticarUsuario(
             new AutenticarUsuarioRequest(
                 'Bruno Viana',
-                'brunoviana@gmail.com'
+                'brunoviana@gmail.com',
+                'foto.jpg'
             ),
             $this->usuarioRepositoryFake,
             $this->listaDeConvitesFake

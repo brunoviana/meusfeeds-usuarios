@@ -32,6 +32,7 @@ class AutenticarUsuario
     {
         $nome = $this->request->nome();
         $email = $this->request->email();
+        $foto = $this->request->foto();
 
         $usuario = $this->usuarioRepository->buscarPeloEmail($email);
 
@@ -43,7 +44,7 @@ class AutenticarUsuario
             throw new UsuarioNaoAutenticadoException('Usuário não tem permissão para acessar');
         }
 
-        $usuario = new Usuario($nome, $email);
+        $usuario = new Usuario($nome, $email, $foto);
 
         $this->usuarioRepository->salvar($usuario);
 

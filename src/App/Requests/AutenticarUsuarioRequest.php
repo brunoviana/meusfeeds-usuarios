@@ -8,10 +8,13 @@ class AutenticarUsuarioRequest
 
     private string $email;
 
-    public function __construct(string $nome, string $email)
+    private string $foto;
+
+    public function __construct(string $nome, string $email, string $foto = '')
     {
         $this->nome = $nome;
         $this->email = $email;
+        $this->foto = $foto;
     }
 
     public function nome()
@@ -22,5 +25,10 @@ class AutenticarUsuarioRequest
     public function email()
     {
         return $this->email;
+    }
+
+    public function foto()
+    {
+        return $this->foto;
     }
 }

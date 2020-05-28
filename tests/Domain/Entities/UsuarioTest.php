@@ -12,7 +12,8 @@ class UsuarioTest extends TestCase
     {
         $usuario = new Usuario(
             'Bruno Viana',
-            'brunoviana@gmail.com'
+            'brunoviana@gmail.com',
+            'foto.jpg'
         );
 
         $this->assertEquals(0, $usuario->id());
@@ -22,7 +23,8 @@ class UsuarioTest extends TestCase
     {
         $usuario = new Usuario(
             'Bruno Viana',
-            'brunoviana@gmail.com'
+            'brunoviana@gmail.com',
+            'foto.jpg'
         );
 
         $usuario->id(1);
@@ -36,7 +38,8 @@ class UsuarioTest extends TestCase
 
         $usuario = new Usuario(
             'Bruno Viana',
-            'brunoviana@gmail.com'
+            'brunoviana@gmail.com',
+            'foto.jpg'
         );
 
         $usuario->id(1);
@@ -47,7 +50,8 @@ class UsuarioTest extends TestCase
     {
         $usuario = new Usuario(
             'Bruno Viana',
-            'brunoviana@gmail.com'
+            'brunoviana@gmail.com',
+            'foto.jpg'
         );
 
         $this->assertEquals('Bruno Viana', $usuario->nome());
@@ -57,9 +61,21 @@ class UsuarioTest extends TestCase
     {
         $usuario = new Usuario(
             'Bruno Viana',
-            'brunoviana@gmail.com'
+            'brunoviana@gmail.com',
+            'foto.jpg'
         );
 
         $this->assertEquals('brunoviana@gmail.com', $usuario->email());
+    }
+
+    public function test_Usuario_Deve_Retornar_Foto_Corretamente()
+    {
+        $usuario = new Usuario(
+            'Bruno Viana',
+            'brunoviana@gmail.com',
+            'foto.jpg'
+        );
+
+        $this->assertEquals('foto.jpg', $usuario->foto());
     }
 }
